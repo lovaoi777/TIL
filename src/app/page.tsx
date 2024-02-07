@@ -1,6 +1,8 @@
 import Container from "@/app/_components/Container";
 import Image from "next/image";
 import RecentPosts from "@/app/_components/RecentPosts";
+import { allPosts } from "contentlayer/generated";
+
 export default function Home() {
   return (
     <Container>
@@ -18,7 +20,7 @@ export default function Home() {
           <span
             className={`absolute top-12 font-extrabold italic text-white text-5xl md:text-9xl text flex justify-center w-full drop-shadow-lg`}
           >
-            My Blog
+            병규 Blog
           </span>
         </div>
         <RecentPosts />
