@@ -10,7 +10,8 @@ export default function Page() {
           alt="대표 이미지"
           width={300}
           height={300}
-          layout={`responsive`}
+          objectFit="cover"
+          className={`rounded-3xl`}
         />
         <div className={"my-20"}>
           <h1 className={"text-1.7xl font-extrabold mb-3"}>
@@ -27,6 +28,9 @@ export default function Page() {
             <br />
           </span>
         </div>
+      </div>
+      <div className={"my-20"}>
+        <h1 className={"text-3xl font-extrabold mb-3"}>Stack</h1>
       </div>
     </Container>
   );
