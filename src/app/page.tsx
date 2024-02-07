@@ -11,10 +11,10 @@ export default function Home() {
           <Image
             src={`/home.jpeg`}
             alt="대표 이미지"
-            width={1000}
-            layout={`responsive`}
-            height={45}
+            width={40}
+            height={40}
             objectFit="cover"
+            layout={`responsive`}
             className={`rounded-3xl`}
           />
           <span

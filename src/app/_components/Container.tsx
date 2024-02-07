@@ -17,20 +17,7 @@ export default function Container(props: any) {
         <meta content={meta.description} name="description" />
         <meta property="og:site_name" content={meta.author} />
       </Head>
-      <header
-        className={`w-full max-w-3xl flex flex-row justify-between items-center my-1`}
-      >
-        <div className={`flex flex-row items-center`}>
-          <Image
-            src={`/logo.jpeg`}
-            alt="로고"
-            width={40}
-            height={100}
-            objectFit={`cover`}
-            className={`rounded-full`}
-          />
-          <span className={`mx-2 font-extralight text-lg`}>My Blog</span>
-        </div>
+      <header className={`w-full max-w-3xl flex flex-row  items-center my-1`}>
         <NavMenu />
       </header>
       <main className={`w-full max-w-3xl`}>{props.children}</main>

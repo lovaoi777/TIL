@@ -1,0 +1,110 @@
+---
+title: 알고리즘
+date: 2024-02-10
+description: (알고리즘) MergeSort
+---
+
+#### 오늘은 수업시간에 배운 MergeSort 를 적어보려구 합니다.❗️
+![](https://velog.velcdn.com/images/lovaoi777/post/ec79aa9f-0ed8-4a4b-81e6-9451247b27e0/image.png)
+
+### 🚀MergeSort (합병 정렬)
+> 하나의 리스트를 두 개의 균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음, 두 개의 정렬된 부분 리스트를 합하여 전체가 정렬된 리스트가 되게 하는 방법이다.
+
+### ** MergeSort는 아래의 단계로 이루어져 있다. **
+
+> * **🪄 Divide(분할) ** : n개의 숫자들을 n / 2 개씩의 부분문제로 분할
+* **🪄 Conquer(정복) ** : 각각의 부분문제를 해결 (정렬 )
+* **🪄 Merging(결합) ** : 하나의 리스트를 두 개의 균등한 크기로 분할하고 분할된 부분 리스트를 정렬한 다음, 두 개의 정렬된 부분 리스트를 합하여 전체가 정렬된 리스트가 되게 하는 방법이다.
+
+
+### 🚀 MergeSort 과정
+
+
+![](https://velog.velcdn.com/images/lovaoi777/post/b70250bc-3f7e-4c87-9f97-7c2d2603c1f3/image.png)
+
+**❗️ 위의 사진처럼 위에서 부터 Divide(분할) -> Merging(정복) -> Conquer(결합)  하는 방식으로 움직입니다. **
+
+
+### 🚀 MergeSort 알고리즘 구현
+
+![](https://velog.velcdn.com/images/lovaoi777/post/4133103b-1847-4dd8-a0d9-e549adfa7f4f/image.png)
+
+**📌 위의 list[37,10,22,30,35,13,25,24] 를 MergeSort를 하는 과정입니다. 이를 아래의  C언어 코드로  알고리즘을 구현해보았습니다.**
+
+```c
+#include <stdio.h>
+#define MAX_NUM  8
+
+int sorted[8];
+void merge(int list[], int start, int k, int finish ){
+    int start_num ,result;
+    start_num = start; //분할된 리스트의 출발점
+    result = start; //합체된 리스트의 출발점
+    int middle = k +1 ; //중간 인덱스
+
+    //작은 순서대로 배열에 삽입된다.
+    while(start_num<=k && middle <=finish){ //start -> k 까지 , middle -> finish까지
+        if(list[start_num] <= list [middle])
+            sorted[result++] = list[start_num++];
+        else{
+            sorted[result++] = list[middle++];
+        }
+    }
+
+    // start_num 모든 인덱스를 넣었다면 k를 넣는다.
+    if(start_num>k){
+        for(int i=middle ; i<=finish; i++){
+            sorted[result++] = list[result];
+        }
+    }
+    //k 모든 값이  끝났다면start_num 인덱스를 넣어준다.
+    else{
+        for(int i=start_num ; i<=k; i++){
+            sorted[result++] = list[i];
+        }
+    }
+    //배열 sorted[]의 리스트를 배열 list[]로 재배열한다.
+    for(int i =start; i<=finish; i++){
+        list[i] = sorted[i];
+    }
+}
+
+//
+void merge_sort(int list[] , int start , int finish){
+    int k;
+    if(start < finish){
+        k = (start+finish)/2; //k : 중간 원소의 인덱스
+        merge_sort(list,start,k); //앞부분 재귀 호출
+        merge_sort(list,k+1,finish);  //뒷부분 재귀호출
+        merge(list,start,k , finish);  //합체
+    }
+}
+
+void main() {
+    int list[MAX_NUM] = {37,10,22,30,35,13,25,24};
+
+    printf("Merge Sort전\n");
+          for(int i=0; i<MAX_NUM; i++){
+    printf("%d ", list[i]);
+  }
+  printf("\n------------------\n");
+
+    printf("Merge Sort후\n");
+    merge_sort(list, 0 , MAX_NUM-1);
+      for(int i=0; i<MAX_NUM; i++){
+    printf("%d ", list[i]);
+  }
+
+}
+```
+
+### 💻 출력코드
+
+![](https://velog.velcdn.com/images/lovaoi777/post/2888641e-9add-4431-ba4f-f6e85b71c43f/image.png)
+
+
+### 🙋🏻‍♂️느낀점
+
+> 처음에는 이해가 안되는부분들이 많이 있었다. 예를 들면 Conquer(정복) 부분을 어떻게 효율적으로 구성할 수있을지? 또는 어떠한 형식으로 Mergin(결합)을 해야하는지 ? 고민을 해보았습니다. 하지만 여러 개발자분들이 하셨던 코드를 보고 저 한테 잘 맞는 코드를 변형하여 만들었습니다. 그리고 알고리즘이 너무 부족하다는점...... 느꼇다...🥹🥹
+
+

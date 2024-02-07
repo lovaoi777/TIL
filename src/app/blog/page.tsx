@@ -23,14 +23,4 @@ const Blog = () => {
   );
 };
 
-// export const getStaticProps = async () => {
-
-//
-//   return {
-//     props: {
-//       posts,
-//     },
-//   };
-// };
-
 export default Blog;

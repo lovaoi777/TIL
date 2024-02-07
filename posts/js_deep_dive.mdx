@@ -1,0 +1,116 @@
+---
+title: JavaScript
+date: 2024-02-11
+description: JS 프로퍼 어트리뷰트 관해서
+---
+
+
+### 16.1 내부 슬롯과 내부 메서드
+프로퍼티 어트리뷰트를 이해하기 위해 먼저 내부 슬롯(Internal slot)과 내부  메서드(internal method)의 개념을 알아야한다.
+
+
+내부 슬롯과 내부 메서드는 자바스크립트 엔진의 구현 알고리즘을 설명하기 위해 ECMAScript 사야에서 사용하는 의사 프로퍼티(pseudo property)와 의사 메서드(pseudo method)다. ECMAScript 사양에 등장하는 이중 대활호(([[...]])로 감싼이름들이 내부 슬롯과 메서드다.
+
+![](https://velog.velcdn.com/images/lovaoi777/post/167322f4-a6ae-4140-8095-dc43025ace69/image.png)
+
+내부 슬롯과 내부 메서드는 자바스크립트 엔진의 내부 로직이므로 원칙적으로 자바스크립트는 내부 슬롯과 내부 메서드는 접근이나 호출할수없다.
+단❗️일부 내부 슬롯과 내부 메서드에 한하여 직접적으로 전달제공한다.
+
+😀모든 객체는 [[Prototype]]이라는 내부 슬롯을 갖는다. 내부 슬롯은 자바스크립트 엔진의 내부 로직이므로 원칙적으로 접근 불가능하지만, [[Prtotype]] 내부 슬롯의 경우, "_ _proto_ _"를 통해 간접적으로 접근 가능하다.
+
+![](https://velog.velcdn.com/images/lovaoi777/post/78925017-587d-45a1-9719-1ced6cf5c91e/image.png)
+
+### 16.2 프로퍼티 어트리뷰트와 프로퍼티 디스크립터 객체
+> 💻 **자바스크립트 엔진은 프로퍼티를 생성할 때 프로퍼티의 상태를 나타내는 프로퍼티 어트리뷰트를 기본값으로 자동 정의한다.**
+
+#### ❗️프로퍼티의 상태란
+1. 프로퍼티의 값(value)
+2. 값의 갱신 가능 여부(writable)
+3. 열거 가능 여부(enumberable)
+4. 재정의 기능 여부(configurable)
+
+프로퍼티 어트리뷰트는 JS엔진이 관리하는 내부 상태 값(meta-property)인 내부 슬롯 [[Value]],[[Writable]],[[Enumberable]],[[Configurable]]이다. ❗️따라서 프로퍼티 어트리뷰트에 직접 접근 할수 없지만 **Object.getOwnPropertyDescriptor** 메서드를 사용하여 간접적으로 확인 할 수 있다.
+![](https://velog.velcdn.com/images/lovaoi777/post/7cb2d110-45d1-4346-933d-cb46ed5c9701/image.png)
+
+Object.getOwnPropertyDescriptor 메서드를 호출할 때 첫 번째 매게변수에는 **객체의 참조**를 전달하고,두 번째 매게변수에는 프로퍼티 키를 **문자열**로 전달
+❗️이때 Object.getOwnPropertyDescriptor 메서드는 프로퍼티 어트리뷰트 정보를 제공하는 프로퍼티 디스크립터 객체를 반환하다. 존재하지 않으면 undefine가 반환된다.
+
+**🐣디스크립터 메서드 종류**
+❗️Object.getOwnPropertyDescriptor ==  하나의 프로퍼티
+❗️Object.getOwnPropertyDescriptors == 모든 프로퍼티
+
+![](https://velog.velcdn.com/images/lovaoi777/post/92f595c8-985e-4e37-8c9d-4addc629756f/image.png)
+
+### 16.3 데이터 프로퍼티와 접근자 프로퍼티
+
+**1. 데이터 프로퍼티(data property)**
+키와 값으로 구성된 일반적인 프로퍼티(value,writable,enumberable,configurable)
+**2. 접근자 프로퍼티(accessor property)**
+자체적으로 값을 갖지 않고 다른 데이터 프로퍼티의 값을 읽거나 저장할 때 호출되는 접근자 함수로 구성된 프로퍼티(set,get 등등)
+
+
+#### 16.3.1 데이터 프로퍼티
+데이터 프로퍼티는 다음과 같은 프로퍼티 어트리뷰트를 갖는다. 프로퍼티 어트리뷰트는 JS 엔진이 프로퍼티를 생성할 때 기본값으로 자동 정의된다.
+![](https://velog.velcdn.com/images/lovaoi777/post/a8354e24-a86d-474b-8825-37331c537314/image.png)
+
+![](https://velog.velcdn.com/images/lovaoi777/post/9af565d6-ef47-4be4-b39c-c6c2c55f8055/image.png)
+
+Object.getOwnPropertyDescriptor   디스크립터 객체를 살펴보면 value 프로퍼티의 값은 'jeon'다.
+프로퍼티 어트리뷰터 [[Value]] == 'jeon'
+writable,enumberable, configurable 프로퍼티의 값은 true이다.
+
+🐣이처럼 프로퍼티가 생성될 때 [[value]]의 값은 프로퍼티 값으로 초기화되며 [[Writable]], [[Enunberable]],[[Configurable]]의 값은 true로 초기화된다.
+
+#### 16.3.1 데이터 프로퍼티
+
+❗️**접근자 함수 getter/setter**
+1. getter
+프로퍼티 어트리뷰트 => [[Get]] 표현
+프로퍼티 디스크립터 객체의 프로퍼티 => get
+🐣설명
+∗ 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 읽을 때 호출되는 접근자 함수이다.
+∗ 접근자 프로퍼티 키로 프로퍼티 값에 접근하면 프로퍼티 어트리뷰트 [[Get]]의 값, 즉 getter 함수가 호출되고 그 결과가 프로퍼티 값으로 반환된다.
+2. setter
+프로퍼티 어트리뷰트 => [[Set]] 표현
+프로퍼티 디스크립터 객체의 프로퍼티 => set
+🐣설명
+∗ 접근자 프로퍼티를 통해 데이터 프로퍼티의 값을 저장할 때 호출되는 접근자 함수
+∗ 접근자 프로퍼티 키로 프로퍼티 값에 저장하면 프로퍼티 어트리뷰트[[Set]]의 값, 즉 setter 함수가 호출되고 그 결과가 프로퍼티 값으로 저장된다.
+
+![](https://velog.velcdn.com/images/lovaoi777/post/b40b6560-eebc-4729-929c-7040a78f888e/image.png)
+
+🐣Object.defineProperty 메서드로 프로퍼티를 정의 할 때 플퍼티 디스크립터 객체의 프로퍼티를 일부 생략 할 수 있다.
+value, get,set의 생략했을 때의 기본 값은 undefine 기본값이 적용한다.
+writable,enumberbale,configurable는 false 정의된다.
+
+![](https://velog.velcdn.com/images/lovaoi777/post/36dc79a8-2b4a-4cc9-a983-ffba98abfcaa/image.png)
+### 16.5 객체 변경 방지
+객체는 변경 가능한 값이므로 재할당 없이 직접 변경할 수있다. 즉, 프로퍼티를 추가하거나 삭제할 수있고, 프로퍼티 값을 갱신할 수있으며, Object.defineProperty 또는 Object.defineProperties 메서드를 사용하여 프로퍼티 어트리뷰트를 재정의 할 수있다.
+
+#### 16.5.1 객체 확장 금지(Object.preventExtensios)
+> Object.perventExtensions 메서드는 객체의 확장을 금지한다.
+❗️확장이 금지된 객체는 프로퍼티 추가가 금지된다. 프로퍼티는 동적 추가와 Object.defineProperty 메서드로 추가할 수 있다. 이 두 가지 방법이 금지된다.
+
+확장이 가능한 객체인지 여부는 Object.isExtensiable 메서드로 확인
+![](https://velog.velcdn.com/images/lovaoi777/post/979569f5-0fad-41dd-ab3e-feb03d86912b/image.png)
+
+#### 16.5.2 객체 밀봉 (Object.seal)
+> Object.seal 메서드는 객체를 밀봉한다.
+🐣객체 밀봉이란 프로퍼티 추가 및 삭제와 프로퍼티 어트리뷰트 재정의 금지를 의미
+❗️밀봉된 객체는 읽기와 쓰기만 가능하다.
+
+밀봉된 객체인지 여부는 Object.isSealed 메서드로 확인
+
+![](https://velog.velcdn.com/images/lovaoi777/post/1acb34c9-aaf3-4dc4-b14c-d7980281b0b7/image.png)
+
+
+#### 16.5.3 객체 동결 (Object.freeze)
+> Object.freeze 메서드는 객체를 동결한다.
+🐣객체 동결이란 프로퍼티 추가 및 삭제와 프로퍼티 어트리뷰트 재정의 금지, 프로퍼티 값 갱신 금지를 의미한다.
+**즉❗️, 동결된 객체는 읽기만 가능하다**
+
+동결된 객체인지 여부는 Object.isFrozen 메서드로 확인
+![](https://velog.velcdn.com/images/lovaoi777/post/5c021aaa-55c5-489f-ae15-13ae437d9c23/image.png)
+
+#### 16.5.4 불변객체
+
