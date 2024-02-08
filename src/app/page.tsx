@@ -2,6 +2,7 @@ import Container from "@/app/_components/Container";
 import Image from "next/image";
 import RecentPosts from "@/app/_components/RecentPosts";
 import { allPosts } from "contentlayer/generated";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -18,11 +19,20 @@ export default function Home() {
           />
           <div className={"my-20 flex  flex-col item-center "}>
             <h1 className={"text-1.7xl font-extrabold mb-3"}>Contact</h1>
-            Phone : 010-5910-7294
-            <br />
-            Email : lovaoi777@naver.com
-            <br />
-            Git : https://github.com/lovaoi777
+            <label>
+              <span className={`text-1.7xl font-extrabold `}> Phone : </span>
+              010-5910-7294
+            </label>
+            <label>
+              <span className={`text-1.7xl font-extrabold `}>Email : </span>
+              lovaoi777@naver.com
+            </label>
+            <label>
+              <span className={`text-1.7xl font-extrabold`}>Git : </span>
+              <Link href="https://github.com/lovaoi777" passHref>
+                https://github.com/lovaoi777
+              </Link>
+            </label>
             <br />
             <h1 className={"text-1.7xl font-extrabold mt-3 mb-3"}>
               📚Education

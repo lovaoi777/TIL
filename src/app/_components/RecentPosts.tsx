@@ -11,7 +11,7 @@ export default function RecentPosts() {
             key={post._id}
             href={`/blog/${post._raw.flattenedPath}`}
             passHref
-            className={`my-3 border-b-2 py-5`}
+            className={`my-3 border-b-2 border-solid py-5`}
           >
             <span>
               <div className={`font-medium text-xl`}>{post.title}</div>
