@@ -7,3 +7,5 @@ export default function Head() {
     </>
   );
 }
+
+>>>>>>> ed5a765e869f5129be9339100b659eb8dfdf9594
